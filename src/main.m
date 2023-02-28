@@ -307,6 +307,7 @@ static id   acquirePropertyListOrDataSourceFromBundle( NSString *s)
    NSString   *error;
    NSURL      *url;
    id         plist;
+   NSString   *extension;
 
    if( [s isEqualToString:@"none"])
       return( [NSDictionary dictionary]);
@@ -315,18 +316,22 @@ static id   acquirePropertyListOrDataSourceFromBundle( NSString *s)
       data = [[NSFileHandle fileHandleWithStandardInput] readDataToEndOfFile];
    else
    {
-      if( [[s pathExtension] isEqualToString:@"plist"])
+      extension = [s pathExtension];
+
+      if( ! [extension isEqualToString:@"plist"] &&
+          ! [extension isEqualToString:@"json"] &&
+          ! [extension isEqualToString:@"xml"])
       {
-         if( [s rangeOfString:@"://"].length)
-         {
-            url  = [NSURL URLWithString:s];
-            data = [NSData dataWithContentsOfURL:url];
-         }
-         else
-            data = [NSData dataWithContentsOfFile:s];
+          return (acquireDataSourceFromBundle(s));
+      }
+
+      if( [s rangeOfString:@"://"].length)
+      {
+         url  = [NSURL URLWithString:s];
+         data = [NSData dataWithContentsOfURL:url];
       }
       else
-         return( acquireDataSourceFromBundle( s));
+         data = [NSData dataWithContentsOfFile:s];
    }
 
    error = nil;

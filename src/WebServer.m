@@ -110,7 +110,8 @@
 
    // no caching :)
    parser = [[[MulleScionParser alloc] initWithData:data
-                                           fileName:wrapper] autorelease];
+                                           fileName:wrapper
+                                         searchPath:nil] autorelease];
 
    if( [parser debugFilePaths])
       fprintf( stderr, "parsing \"%s\"\n", [wrapper fileSystemRepresentation]);

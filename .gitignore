@@ -79,3 +79,4 @@ kitchen/
 version.old
 .ackrc
 cmake-build-*/
+wilted/
