@@ -2,15 +2,13 @@
 
 #### 🌱 A modern template engine for Objective C
 
+
 (written in an oldfashioned way)
 
 This is the command-line tool for the [MulleScion](//github.com/MulleWeb/MulleScion)
 library. It also provides the documentation for the project in a
 self-contained webserver. It can use JSON, Plist, XML files, even multiples
 and mixes, as a datasource for the template variables.
-
-> This is a fork of [mulle-kybernetik/MulleScion](//github.com/mulle-kybernetik/MulleScion)
-> tailored for use in mulle-sde projects
 
 
 | Release Version                                       | Release Notes
@@ -20,7 +18,6 @@ and mixes, as a datasource for the template variables.
 
 
 ## Usage
-
 
 ```
 Usage:
@@ -58,9 +55,76 @@ Arguments:
 Examples:
    echo '***{{ VALUE }}***' | mulle-scion - args - VALUE="VfL Bochum 1848"
    echo '***{{ __ARGV__[ 0]}}***' | mulle-scion - none - "VfL Bochum 1848"
+
 ```
 
 
+## Example
+
+Create informational text from a typical
+[package.json](https://docs.npmjs.com/cli/v6/configuring-npm/package-json/)
+file with the following template:
+
+`package.txt.scion`:
+
+``` twig
+This is the {{ name }} project version {{ version }}, which resides
+on {{ repository.url }}.
+
+{% if dependencies %}
+It has the following dependencies:
+{% for dep in dependencies %}
+{{ dep }} at {{ dependencies[ dep] }}
+{% endfor %}
+{% endif %}
+```
+
+
+and the mulle-scion `package.json`, somewhat trimmed for readability:
+
+`package.json`:
+
+``` json
+{
+   "name" : "mulle-scion",
+   "version" : "1859.1.9",
+   "description" : "🌱 A modern template engine for Objective C",
+   "homepage" : "https://github.com/MulleWeb/mulle-scion",
+   "dependencies" : {
+      "Foundation" : "git://github.com/MulleFoundation/Foundation",
+      "MulleFoundation" : "git://github.com/MulleFoundation/MulleFoundation",
+      "MulleWebServer" : "git://github.com/MulleWeb/MulleWebServer",
+      "MulleCivetWeb" : "git://github.com/MulleWeb/MulleCivetWeb"
+   }
+}
+```
+
+See the output with:
+
+```sh
+mulle-scion package.txt.scion package.json
+```
+
+
+
+
+## Fork
+
+This is a fork of [mulle-kybernetik/MulleScion](//github.com/mulle-kybernetik/MulleScion)
+tailored for use in mulle-sde projects. It's usually fresher than
+*mulle-kybernetik/MulleScion* and features get backported only on demand,
+or when I need them.
+
+## Overview
+![Overview](overview.dot.svg)
+
+| Requirement                                  | Description
+|----------------------------------------------|-----------------------
+| [Foundation](https://github.com/MulleFoundation/Foundation)             | 💍 MulleFoundation with improved compatibility and legacy support
+| [Foundation-startup](https://github.com/MulleFoundation/Foundation-startup)             | ▶️ Startup library for MulleFoundation
+| [MulleHoedown](https://github.com/MulleWeb/MulleHoedown)             | 💃🏼 Markdown support for mulle-objc
+| [MulleWebServer](https://github.com/MulleWeb/MulleWebServer)             | 🤽🏻‍♂️ Web Server based on civetweb for mulle-objc
+| [MulleScion](https://github.com/MulleWeb/MulleScion)             | 🌱 A modern template engine for Objective C
 
 
 ## Add
@@ -68,7 +132,7 @@ Examples:
 Use [mulle-sde](//github.com/mulle-sde) to add mulle-scion to your project:
 
 ``` sh
-mulle-sde add github:/
+mulle-sde add github:MulleWeb/mulle-scion
 ```
 
 ## Install
@@ -79,22 +143,15 @@ Use [mulle-sde](//github.com/mulle-sde) to build and install mulle-scion and all
 
 ``` sh
 mulle-sde install --prefix /usr/local \
-   https://github.com///archive/latest.tar.gz
+   https://github.com//mulle-scion/archive/latest.tar.gz
 ```
 
 ### Manual Installation
 
-Install the requirements:
-
-| Requirements                                 | Description
-|----------------------------------------------|-----------------------
-| [Foundation](https://github.com/MulleFoundation/Foundation)             | 💍 MulleFoundation with improved compatibility and legacy support
-| [Foundation-startup](https://github.com/MulleFoundation/Foundation-startup)             | ▶️ Startup library for MulleFoundation
-| [MulleHoedown](https://github.com/MulleWeb/MulleHoedown)             | 💃🏼 Markdown support for mulle-objc
-| [MulleWebServer](https://github.com/MulleWeb/MulleWebServer)             | 🤽🏻‍♂️ Web Server based on civetweb for mulle-objc
-| [MulleScion](https://github.com/MulleWeb/MulleScion)             | 🌱 A modern template engine for Objective C
-
-Install **mulle-scion** into `/usr/local` with [cmake](https://cmake.org):
+Install the [requirements](#Overview) and then install
+**mulle-scion**
+with [cmake](https://cmake.org). Here `/usr/local` is chosen as the install
+prefix:
 
 ``` sh
 cmake -B build \
@@ -105,8 +162,13 @@ cmake --build build --config Release &&
 cmake --install build --config Release
 ```
 
+## Platforms and Compilers
+
+All platforms and compilers supported by
+[mulle-c11](//github.com/mulle-c/mulle-c11).
+
+
 ## Author
 
 [Nat!](https://mulle-kybernetik.com/weblog) for Mulle kybernetiK
-
 

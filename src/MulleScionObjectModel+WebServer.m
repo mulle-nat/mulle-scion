@@ -46,7 +46,8 @@
    NSData             *data;
    MulleScionParser   *parser;
 
-   data = [NSMutableData dataWithContentsOfMappedFile:fileName];
+   // mapped file does not work with <( redirection
+   data = [NSMutableData dataWithContentsOfFile:fileName];
    if( ! data)
       return( nil);
 

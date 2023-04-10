@@ -87,7 +87,7 @@
    if( ! [self fileExists:fileName])
       return( nil);
 
-   data = [NSMutableData dataWithContentsOfMappedFile:wrapper];
+   data = [NSMutableData dataWithContentsOfFile:wrapper];
    if( ! data)
       return( nil);
 
