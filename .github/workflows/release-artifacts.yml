@@ -57,7 +57,7 @@ jobs:
 
       - name: Rename Linux Artifact
         run: |
-             mv ${{ github.workspace }}/${{ github.event.repository.name }} ${{ github.workspace }}/=${{ github.event.repository.name }}.linux
+             mv ${{ github.workspace }}/${{ github.event.repository.name }} ${{ github.workspace }}/${{ github.event.repository.name }}.linux
         
       - name: Download macOS Artifact
         uses: actions/download-artifact@v3
@@ -65,7 +65,7 @@ jobs:
           name: artifact.macOS
 
       - name: Rename macOS Artifact
-        run: mv ${{ github.workspace }}/=${{ github.event.repository.name }} ${{ github.workspace }}/=${{ github.event.repository.name }}.macos
+        run: mv ${{ github.workspace }}/${{ github.event.repository.name }} ${{ github.workspace }}/${{ github.event.repository.name }}.macos
 
       - name: Upload Artifacts
         uses: alexellis/upload-assets@0.4.0
